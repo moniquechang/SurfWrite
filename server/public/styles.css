@@ -1,9 +1,14 @@
+.row {
+  justify-content: center;
+}
+
 .card {
   padding: 0;
   background-color: #f1f1f1;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
+h2,
 .card-header {
   font-family: Quicksand, sans-serif;
   font-weight: 600;
