@@ -17,3 +17,33 @@ h2,
 .card-body {
   background-color: #fffbf0;
 }
+
+.weather-link {
+  font-family: inter, sans-serif;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: black;
+}
+
+.fa-cloud {
+  color: #e1dedc;
+}
+
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: inherit;
+}
+
+@media screen and (min-width: 768px) {
+  .weather-link {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .card-header {
+    font-size: 0.9rem;
+  }
+}
