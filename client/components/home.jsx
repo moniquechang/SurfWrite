@@ -5,7 +5,8 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       locationLongitude: null,
-      locationLatitude: null
+      locationLatitude: null,
+      isClicked: false
     };
   }
 
@@ -43,6 +44,15 @@ export default class Home extends React.Component {
         </div>
     );
     return dayCards;
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(position => {
+      this.setState({
+        locationLongitude: position.coords.longitude,
+        locationLatitude: position.coords.latitude
+      });
+    });
   }
 
   render() {
