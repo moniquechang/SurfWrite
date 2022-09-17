@@ -1,3 +1,51 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-window {
+  background-color: white;
+  font-family: Quicksand, sans-serif;
+  font-weight: 600;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 90%;
+  text-align: end;
+}
+
+.modal-button {
+  background-color: white;
+  border: none;
+}
+
+.fa-xmark {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-family: inter, sans-serif;
+  font-weight: 600;
+  text-align: center;
+}
+
+.left-col {
+  text-align: left;
+}
+
+.right-col {
+  text-align: right;
+}
+
+p {
+  margin: 0;
+}
+
 .row {
   justify-content: center;
 }
@@ -36,9 +84,17 @@ a:hover {
   color: inherit;
 }
 
+.hidden {
+  display: none;
+}
+
 @media screen and (min-width: 768px) {
   .weather-link {
     font-size: 0.8rem;
+  }
+
+  .modal-window {
+    width: 40%;
   }
 }
 
