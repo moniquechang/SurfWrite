@@ -11,6 +11,7 @@ CREATE TABLE "entires" (
 	"userId" int NOT NULL,
 	"content" TEXT NOT NULL,
 	"weather" TEXT NOT NULL,
+	"date" TEXT NOT NULL UNIQUE,
 	"createdAt" timestamptz NOT NULL,
 	CONSTRAINT "entires_pk" PRIMARY KEY ("entryId")
 ) WITH (
@@ -43,7 +44,7 @@ CREATE TABLE "videos" (
 
 
 
-CREATE TABLE "users" (
+CREATE TABLE "Users" (
 	"userId" serial NOT NULL,
 	"name" TEXT NOT NULL,
 	"username" TEXT NOT NULL UNIQUE,
