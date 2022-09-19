@@ -66,6 +66,18 @@ h2,
   background-color: #fffbf0;
 }
 
+.surf-question-div {
+  text-align: end;
+  margin-right: 0.7rem;
+}
+
+.surf-question-label {
+  font-family: inter, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-right: 0.3rem;
+}
+
 .weather-link {
   font-family: inter, sans-serif;
   text-decoration: none;

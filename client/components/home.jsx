@@ -62,6 +62,10 @@ export default class Home extends React.Component {
           <div className='col-11 col-md-auto card mb-5'>
             <div className='card-header'>{`${day}: ${this.getLocalDateString(dayArr.indexOf(day))}`}</div>
             <div className='card-body text-center p-0'>
+              <div className='surf-question-div'>
+                <label htmlFor='surf' className='surf-question-label'>Surf?</label>
+                <input type='checkbox' name='surf?' value='yes' id='surf'></input>
+              </div>
               <a className='weather-link mt-5' onClick={this.handleClickOpenModal} id={index}>
                 <i className="fa-solid fa-cloud mt-5"></i>
                 Check the Weather
