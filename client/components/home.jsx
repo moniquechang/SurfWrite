@@ -6,14 +6,16 @@ export default class Home extends React.Component {
     this.state = {
       locationLongitude: null,
       locationLatitude: null,
-      isClicked: false,
-      weatherData: null
+      isClickedWeather: false,
+      weatherData: null,
+      isClickedSurfbox: [false, false, false, false, false, false, false]
     };
     this.handleClickOpenModal = this.handleClickOpenModal.bind(this);
     this.handleClickCloseModal = this.handleClickCloseModal.bind(this);
     this.getLocalDateString = this.getLocalDateString.bind(this);
     this.getIsoDates = this.getIsoDates.bind(this);
     this.modalInfo = this.modalInfo.bind(this);
+    this.handleChangeSurfBox = this.handleChangeSurfBox.bind(this);
   }
 
   componentDidMount() {
@@ -57,14 +59,19 @@ export default class Home extends React.Component {
 
   createDayCards() {
     const dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dayCards = dayArr.map((day, index) =>
+    return dayArr.map((day, index) => {
+      const handleCheckChange = event => {
+        const isChecked = event.target.checked;
+        this.handleChangeSurfBox(isChecked, index);
+      };
+      return (
         <div key={index}>
           <div className='col-11 col-md-auto card mb-5'>
-            <div className='card-header'>{`${day}: ${this.getLocalDateString(dayArr.indexOf(day))}`}</div>
+            <div className='card-header'>{`${day}: ${this.getLocalDateString(index)}`}</div>
             <div className='card-body text-center p-0'>
               <div className='surf-question-div'>
                 <label htmlFor='surf' className='surf-question-label'>Surf?</label>
-                <input type='checkbox' name='surf?' value='yes' id='surf'></input>
+                <input type='checkbox' name='surf?' value='yes' id='surf' onChange={handleCheckChange}></input>
               </div>
               <a className='weather-link mt-5' onClick={this.handleClickOpenModal} id={index}>
                 <i className="fa-solid fa-cloud mt-5"></i>
@@ -74,9 +81,8 @@ export default class Home extends React.Component {
             </div>
           </div>
         </div>
-    );
-
-    return dayCards;
+      );
+    });
   }
 
   handleClickOpenModal(event) {
@@ -85,7 +91,7 @@ export default class Home extends React.Component {
       .then(response => response.json())
       .then(result => {
         this.setState({
-          isClicked: true,
+          isClickedWeather: true,
           weatherData: result
         });
       });
@@ -93,7 +99,7 @@ export default class Home extends React.Component {
 
   handleClickCloseModal() {
     this.setState({
-      isClicked: false,
+      isClickedWeather: false,
       weatherData: null
     });
   }
@@ -141,10 +147,23 @@ export default class Home extends React.Component {
     }
   }
 
+  handleChangeSurfBox(isChecked, index) {
+    if (isChecked) {
+      const copyArr = this.state.isClickedSurfbox.map(index => index);
+      copyArr.splice(index, 1, true);
+      this.setState({ isClickedSurfbox: copyArr });
+
+    } else {
+      const copyArr = this.state.isClickedSurfbox.map(index => index);
+      copyArr.splice(index, 1, false);
+      this.setState({ isClickedSurfbox: copyArr });
+    }
+  }
+
   render() {
     let modalBackgroundClass;
     let modalWindowClass;
-    if (this.state.isClicked) {
+    if (this.state.isClickedWeather) {
       modalBackgroundClass = 'modal-background';
       modalWindowClass = 'modal-window';
     } else {
