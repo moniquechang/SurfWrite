@@ -59,19 +59,31 @@ export default class Home extends React.Component {
 
   createDayCards() {
     const dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    let cardHeaderClass;
+    let addLogDivClass;
     return dayArr.map((day, index) => {
       const handleCheckChange = event => {
         const isChecked = event.target.checked;
         this.handleChangeSurfBox(isChecked, index);
       };
+      if (this.state.isClickedSurfbox[index]) {
+        cardHeaderClass = 'card-header card-header-blue';
+        addLogDivClass = 'text-start';
+      } else {
+        cardHeaderClass = 'card-header';
+        addLogDivClass = 'text-start hidden';
+      }
       return (
         <div key={index}>
           <div className='col-11 col-md-auto card mb-5'>
-            <div className='card-header'>{`${day}: ${this.getLocalDateString(index)}`}</div>
+            <div className={cardHeaderClass}>{`${day}: ${this.getLocalDateString(index)}`}</div>
             <div className='card-body text-center p-0'>
               <div className='surf-question-div'>
-                <label htmlFor='surf' className='surf-question-label'>Surf?</label>
+                <label className='surf-question-label'>Surf?</label>
                 <input type='checkbox' name='surf?' value='yes' id='surf' onChange={handleCheckChange}></input>
+              </div>
+              <div className={addLogDivClass}>
+                <a className='add-log-link'>Add a log...</a>
               </div>
               <a className='weather-link mt-5' onClick={this.handleClickOpenModal} id={index}>
                 <i className="fa-solid fa-cloud mt-5"></i>
@@ -149,12 +161,12 @@ export default class Home extends React.Component {
 
   handleChangeSurfBox(isChecked, index) {
     if (isChecked) {
-      const copyArr = this.state.isClickedSurfbox.map(index => index);
+      const copyArr = this.state.isClickedSurfbox.map(checked => checked);
       copyArr.splice(index, 1, true);
       this.setState({ isClickedSurfbox: copyArr });
 
     } else {
-      const copyArr = this.state.isClickedSurfbox.map(index => index);
+      const copyArr = this.state.isClickedSurfbox.map(checked => checked);
       copyArr.splice(index, 1, false);
       this.setState({ isClickedSurfbox: copyArr });
     }
@@ -163,6 +175,7 @@ export default class Home extends React.Component {
   render() {
     let modalBackgroundClass;
     let modalWindowClass;
+
     if (this.state.isClickedWeather) {
       modalBackgroundClass = 'modal-background';
       modalWindowClass = 'modal-window';
@@ -170,6 +183,7 @@ export default class Home extends React.Component {
       modalBackgroundClass = 'modal-background hidden';
       modalWindowClass = 'modal-window hidden';
     }
+
     return (
       <>
         <div className='container'>
