@@ -17,6 +17,7 @@ export default class Home extends React.Component {
     this.getIsoDates = this.getIsoDates.bind(this);
     this.modalInfo = this.modalInfo.bind(this);
     this.handleChangeSurfBox = this.handleChangeSurfBox.bind(this);
+    this.handleClickEntriesModal = this.handleClickEntriesModal.bind(this);
   }
 
   componentDidMount() {
@@ -84,7 +85,7 @@ export default class Home extends React.Component {
                 <input type='checkbox' name='surf?' value='yes' id='surf' onChange={handleCheckChange}></input>
               </div>
               <div className={addLogDivClass}>
-                <a className='add-log-link'>Add a log...</a>
+                <a className='add-log-link' onClick={this.handleClickEntriesModal}>Add a log...</a>
               </div>
               <a className='weather-link mt-5' onClick={this.handleClickOpenWeatherModal} id={index}>
                 <i className="fa-solid fa-cloud mt-5"></i>
@@ -115,6 +116,14 @@ export default class Home extends React.Component {
       isClickedWeather: false,
       weatherData: null
     });
+  }
+
+  handleClickEntriesModal() {
+    if (this.state.isClickedAddEntry) {
+      this.setState({ isClickedAddEntry: false });
+    } else {
+      this.setState({ isClickedAddEntry: true });
+    }
   }
 
   modalInfo(data) {
@@ -176,6 +185,7 @@ export default class Home extends React.Component {
   render() {
     let modalBackgroundClass;
     let modalWindowClass;
+    let entriesModalClass;
 
     if (this.state.isClickedWeather) {
       modalBackgroundClass = 'modal-background';
@@ -183,6 +193,12 @@ export default class Home extends React.Component {
     } else {
       modalBackgroundClass = 'modal-background hidden';
       modalWindowClass = 'modal-window hidden';
+    }
+
+    if (this.state.isClickedAddEntry) {
+      entriesModalClass = 'modal-background';
+    } else {
+      entriesModalClass = 'modal-background hidden';
     }
 
     return (
@@ -198,9 +214,9 @@ export default class Home extends React.Component {
             {this.modalInfo(this.state.weatherData)}
           </div>
         </div>
-        <div className='modal-background'>
+        <div className={entriesModalClass}>
           <div className='modal-window-entries'>
-            <button className='modal-button'><i className="fa-solid fa-xmark fa-xmark-blue"></i></button>
+            <button className='modal-button' onClick={this.handleClickEntriesModal}><i className="fa-solid fa-xmark fa-xmark-blue"></i></button>
             <form className='text-center'>
               <textarea rows='7' placeholder='Start writing here...'></textarea>
               <button type="submit" className="btn btn-outline-primary mt-4">SAVE</button>
