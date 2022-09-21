@@ -9,7 +9,8 @@ export default class Home extends React.Component {
       isClickedWeather: false,
       weatherData: null,
       isClickedSurfbox: [false, false, false, false, false, false, false],
-      isClickedAddEntry: false
+      isClickedAddEntry: false,
+      entryValue: ''
     };
     this.handleClickOpenWeatherModal = this.handleClickOpenWeatherModal.bind(this);
     this.handleClickCloseWeatherModal = this.handleClickCloseWeatherModal.bind(this);
@@ -18,6 +19,7 @@ export default class Home extends React.Component {
     this.modalInfo = this.modalInfo.bind(this);
     this.handleChangeSurfBox = this.handleChangeSurfBox.bind(this);
     this.handleClickEntriesModal = this.handleClickEntriesModal.bind(this);
+    this.handleChangeEntriesTextbox = this.handleChangeEntriesTextbox.bind(this);
   }
 
   componentDidMount() {
@@ -182,6 +184,10 @@ export default class Home extends React.Component {
     }
   }
 
+  handleChangeEntriesTextbox(event) {
+    this.setState({ entryValue: event.target.value });
+  }
+
   render() {
     let modalBackgroundClass;
     let entriesModalClass;
@@ -215,7 +221,7 @@ export default class Home extends React.Component {
           <div className='modal-window-entries'>
             <button className='modal-button' onClick={this.handleClickEntriesModal}><i className="fa-solid fa-xmark fa-xmark-blue"></i></button>
             <form className='text-center'>
-              <textarea rows='7' placeholder='Start writing here...'></textarea>
+              <textarea rows='7' placeholder='Start writing here...' value={this.state.entryValue} onChange={this.handleChangeEntriesTextbox}></textarea>
               <button type="submit" className="btn btn-outline-primary mt-4">SAVE</button>
             </form>
           </div>
