@@ -8,10 +8,11 @@ export default class Home extends React.Component {
       locationLatitude: null,
       isClickedWeather: false,
       weatherData: null,
-      isClickedSurfbox: [false, false, false, false, false, false, false]
+      isClickedSurfbox: [false, false, false, false, false, false, false],
+      isClickedAddEntry: false
     };
-    this.handleClickOpenModal = this.handleClickOpenModal.bind(this);
-    this.handleClickCloseModal = this.handleClickCloseModal.bind(this);
+    this.handleClickOpenWeatherModal = this.handleClickOpenWeatherModal.bind(this);
+    this.handleClickCloseWeatherModal = this.handleClickCloseWeatherModal.bind(this);
     this.getLocalDateString = this.getLocalDateString.bind(this);
     this.getIsoDates = this.getIsoDates.bind(this);
     this.modalInfo = this.modalInfo.bind(this);
@@ -85,7 +86,7 @@ export default class Home extends React.Component {
               <div className={addLogDivClass}>
                 <a className='add-log-link'>Add a log...</a>
               </div>
-              <a className='weather-link mt-5' onClick={this.handleClickOpenModal} id={index}>
+              <a className='weather-link mt-5' onClick={this.handleClickOpenWeatherModal} id={index}>
                 <i className="fa-solid fa-cloud mt-5"></i>
                 Check the Weather
                 <i className="fa-solid fa-cloud mt-5"></i>
@@ -97,7 +98,7 @@ export default class Home extends React.Component {
     });
   }
 
-  handleClickOpenModal(event) {
+  handleClickOpenWeatherModal(event) {
     const startDate = this.getIsoDates(event.target.id);
     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${this.state.locationLatitude}&longitude=${this.state.locationLongitude}&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=auto&start_date=${startDate}&end_date=${startDate}`)
       .then(response => response.json())
@@ -109,7 +110,7 @@ export default class Home extends React.Component {
       });
   }
 
-  handleClickCloseModal() {
+  handleClickCloseWeatherModal() {
     this.setState({
       isClickedWeather: false,
       weatherData: null
@@ -192,9 +193,18 @@ export default class Home extends React.Component {
         </div>
         <div className={modalBackgroundClass}>
           <div className={modalWindowClass}>
-            <button className='modal-button' onClick={this.handleClickCloseModal}><i className="fa-solid fa-xmark"></i></button>
+            <button className='modal-button' onClick={this.handleClickCloseWeatherModal}><i className="fa-solid fa-xmark"></i></button>
             <h4 className='mt-2 mb-4'>Weather Forecast</h4>
             {this.modalInfo(this.state.weatherData)}
+          </div>
+        </div>
+        <div className='modal-background'>
+          <div className='modal-window-entries'>
+            <button className='modal-button'><i className="fa-solid fa-xmark fa-xmark-blue"></i></button>
+            <form className='text-center'>
+              <textarea rows='7' placeholder='Start writing here...'></textarea>
+              <button type="submit" className="btn btn-outline-primary mt-4">SAVE</button>
+            </form>
           </div>
         </div>
       </>
