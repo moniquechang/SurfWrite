@@ -113,6 +113,10 @@ h2,
   margin-right: 0.7rem;
 }
 
+.surf-question-div > input:hover {
+  cursor: pointer;
+}
+
 .surf-question-label {
   font-family: inter, sans-serif;
   font-size: 0.9rem;

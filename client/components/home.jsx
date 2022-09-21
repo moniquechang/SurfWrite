@@ -184,15 +184,12 @@ export default class Home extends React.Component {
 
   render() {
     let modalBackgroundClass;
-    let modalWindowClass;
     let entriesModalClass;
 
     if (this.state.isClickedWeather) {
       modalBackgroundClass = 'modal-background';
-      modalWindowClass = 'modal-window';
     } else {
       modalBackgroundClass = 'modal-background hidden';
-      modalWindowClass = 'modal-window hidden';
     }
 
     if (this.state.isClickedAddEntry) {
@@ -208,7 +205,7 @@ export default class Home extends React.Component {
           <div className='row row-cols-md-4'>{this.createDayCards()}</div>
         </div>
         <div className={modalBackgroundClass}>
-          <div className={modalWindowClass}>
+          <div className='modal-window'>
             <button className='modal-button' onClick={this.handleClickCloseWeatherModal}><i className="fa-solid fa-xmark"></i></button>
             <h4 className='mt-2 mb-4'>Weather Forecast</h4>
             {this.modalInfo(this.state.weatherData)}
