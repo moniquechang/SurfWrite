@@ -124,6 +124,7 @@ h2,
   margin-right: 0.3rem;
 }
 
+.entry-content,
 .add-log-link {
   font-family: Quicksand, sans-serif;
   text-decoration: none;

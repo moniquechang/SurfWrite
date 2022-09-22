@@ -7,12 +7,41 @@ export default class Home extends React.Component {
       locationLongitude: null,
       locationLatitude: null,
       isClickedWeather: false,
-      weatherData: [null, null, null, null, null, null, null],
-      isClickedSurfbox: [false, false, false, false, false, false, false],
       isClickedAddEntry: false,
       entryValueContent: '',
       entryValueDate: '',
-      entryValueWeather: ''
+      entryValueWeather: '',
+      selectedDay: null,
+      days: [
+        {
+          weather: null,
+          isClicked: false,
+          content: null
+        }, {
+          weather: null,
+          isClicked: false,
+          content: null
+        }, {
+          weather: null,
+          isClicked: false,
+          content: null
+        }, {
+          weather: null,
+          isClicked: false,
+          content: null
+        }, {
+          weather: null,
+          isClicked: false,
+          content: null
+        }, {
+          weather: null,
+          isClicked: false,
+          content: null
+        }, {
+          weather: null,
+          isClicked: false,
+          content: null
+        }]
     };
     this.handleClickOpenWeatherModal = this.handleClickOpenWeatherModal.bind(this);
     this.handleClickCloseWeatherModal = this.handleClickCloseWeatherModal.bind(this);
@@ -67,31 +96,37 @@ export default class Home extends React.Component {
   createDayCards() {
     const dayArr = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     let cardHeaderClass;
-    let addLogDivClass;
-    return dayArr.map((day, index) => {
+    return this.state.days.map((day, index) => {
       const handleCheckChange = event => {
         const isChecked = event.target.checked;
         this.handleChangeSurfBox(isChecked, index);
       };
-      if (this.state.isClickedSurfbox[index]) {
+      if (day.isClicked) {
         cardHeaderClass = 'card-header card-header-blue';
-        addLogDivClass = 'text-start';
       } else {
         cardHeaderClass = 'card-header';
-        addLogDivClass = 'text-start hidden';
       }
       return (
         <div key={index}>
           <div className='col-11 col-md-auto card mb-5'>
-            <div className={cardHeaderClass}>{`${day}: ${this.getLocalDateString(index)}`}</div>
+            <div className={cardHeaderClass}>{`${dayArr[index]}: ${this.getLocalDateString(index)}`}</div>
             <div className='card-body text-center p-0'>
               <div className='surf-question-div'>
                 <label className='surf-question-label'>Surf?</label>
-                <input type='checkbox' name='surf?' value='yes' id='surf' onChange={handleCheckChange}></input>
+                <input type='checkbox' name='surf?' value='yes' id='surf' disabled={day.content !== null} onChange={handleCheckChange}></input>
               </div>
-              <div className={addLogDivClass}>
-                <a className='add-log-link' onClick={this.handleClickEntriesModal} id={index}>Add a log...</a>
-              </div>
+              {
+                day.isClicked && day.content === null &&
+                <div className='text-start'>
+                  <a className='add-log-link' onClick={this.handleClickEntriesModal} id={index}>Add a log...</a>
+                </div>
+              }
+              {
+                day.content !== null &&
+                <div className='text-start'>
+                  <p className='entry-content'>{day.content}</p>
+                </div>
+              }
               <a className='weather-link mt-5' onClick={this.handleClickOpenWeatherModal} id={index}>
                 <i className="fa-solid fa-cloud mt-5"></i>
                 Check the Weather
@@ -106,15 +141,15 @@ export default class Home extends React.Component {
 
   handleClickOpenWeatherModal(event) {
     const startDate = this.getIsoDates(event.target.id);
-    const copyArr = this.state.weatherData.map(day => day);
     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${this.state.locationLatitude}&longitude=${this.state.locationLongitude}&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=auto&start_date=${startDate}&end_date=${startDate}`)
       .then(response => response.json())
       .then(result => {
-        copyArr.splice(event.target.id, 1, result);
+        const copyArr = this.state.days.map(day => day);
+        copyArr[event.target.id].weather = result;
         this.setState({
           isClickedWeather: true,
-          weatherData: copyArr,
-          entryValueWeather: copyArr[event.target.id]
+          days: copyArr,
+          entryValueWeather: result
         });
       });
   }
@@ -127,29 +162,31 @@ export default class Home extends React.Component {
   }
 
   handleClickEntriesModal(event) {
-    if (!this.state.isClickedAddEntry && !this.state.weatherData[event.target.id]) {
+    this.setState({ selectedDay: event.target.id });
+    if (!this.state.isClickedAddEntry && this.state.days[event.target.id].weather === null) {
       const startDate = this.getIsoDates(event.target.id);
-      const copyArr = this.state.weatherData.map(day => day);
       fetch(`https://api.open-meteo.com/v1/forecast?latitude=${this.state.locationLatitude}&longitude=${this.state.locationLongitude}&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=auto&start_date=${startDate}&end_date=${startDate}`)
         .then(response => response.json())
         .then(result => {
-          copyArr.splice(event.target.id, 1, result);
+          const copyDaysArr = this.state.days.map(day => day);
+          copyDaysArr[event.target.id].weather = result;
           this.setState({
-            weatherData: copyArr,
+            days: copyDaysArr,
             isClickedAddEntry: true,
             entryValueDate: this.getLocalDateString(event.target.id),
-            entryValueWeather: copyArr[event.target.id]
+            entryValueWeather: result
           });
         });
-    } else if (!this.state.isClickedAddEntry && this.state.weatherData[event.target.id]) {
+    } else if (!this.state.isClickedAddEntry && this.state.days[event.target.id].weather !== null) {
       this.setState({
         isClickedAddEntry: true,
         entryValueDate: this.getLocalDateString(event.target.id),
-        entryValueWeather: this.state.weatherData[event.target.id]
+        entryValueWeather: this.state.days[event.target.id].weather
       });
     } else if (this.state.isClickedAddEntry) {
       this.setState({
         isClickedAddEntry: false,
+        selectedDay: null,
         entryValueDate: '',
         entryValueContent: '',
         entryValueWeather: ''
@@ -201,16 +238,13 @@ export default class Home extends React.Component {
   }
 
   handleChangeSurfBox(isChecked, index) {
-    if (isChecked) {
-      const copyArr = this.state.isClickedSurfbox.map(checked => checked);
-      copyArr.splice(index, 1, true);
-      this.setState({ isClickedSurfbox: copyArr });
-
-    } else {
-      const copyArr = this.state.isClickedSurfbox.map(checked => checked);
-      copyArr.splice(index, 1, false);
-      this.setState({ isClickedSurfbox: copyArr });
-    }
+    const copyDaysArr = this.state.days.slice();
+    const copyDay = Object.assign({}, copyDaysArr[index]);
+    copyDay.isClicked = isChecked;
+    copyDaysArr[index] = copyDay;
+    this.setState({
+      days: copyDaysArr
+    });
   }
 
   handleChangeEntriesTextbox(event) {
@@ -232,15 +266,20 @@ export default class Home extends React.Component {
       })
     })
       .then(res => res.json())
-      // .then(result => console.log(result))
+      .then(result => {
+        const copyDay = Object.assign({}, this.state.days[this.state.selectedDay], result);
+        const copyDayArr = this.state.days.slice();
+        copyDayArr[this.state.selectedDay] = copyDay;
+        this.setState({
+          days: copyDayArr,
+          isClickedAddEntry: false,
+          entryValueContent: '',
+          entryValueDate: '',
+          entryValueWeather: '',
+          selectedDay: null
+        });
+      })
       .catch(err => console.error(err));
-
-    this.setState({
-      isClickedAddEntry: false,
-      entryValueContent: '',
-      entryValueDate: '',
-      entryValueWeather: ''
-    });
   }
 
   render() {
@@ -276,7 +315,7 @@ export default class Home extends React.Component {
           <div className='modal-window-entries'>
             <button className='modal-button' onClick={this.handleClickEntriesModal}><i className="fa-solid fa-xmark fa-xmark-blue"></i></button>
             <form className='text-center' onSubmit={this.handleSubmitEntryForm}>
-              <textarea rows='7' placeholder='Start writing here...' value={this.state.entryValue} onChange={this.handleChangeEntriesTextbox} required='required'></textarea>
+              <textarea rows='7' placeholder='Start writing here...' value={this.state.entryValueContent} onChange={this.handleChangeEntriesTextbox} required='required'></textarea>
               <button type="submit" className="btn btn-outline-primary mt-4">SAVE</button>
             </form>
           </div>

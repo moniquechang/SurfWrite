@@ -28,7 +28,7 @@ app.post('/api/entries', (req, res, next) => {
   const params = [req.body.content, req.body.weather, req.body.date, req.body.userId];
   db.query(sql, params)
     .then(result => {
-      res.status(201).json(result.rows);
+      res.status(201).json(result.rows[0]);
     })
     .catch(err => next(err));
 });
