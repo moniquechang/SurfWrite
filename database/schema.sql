@@ -6,13 +6,14 @@ drop schema "public" cascade;
 
 create schema "public";
 
-CREATE TABLE "entires" (
+CREATE TABLE "entries" (
 	"entryId" serial NOT NULL,
 	"userId" int NOT NULL,
 	"content" TEXT NOT NULL,
 	"weather" TEXT NOT NULL,
-	"createdAt" timestamptz NOT NULL,
-	CONSTRAINT "entires_pk" PRIMARY KEY ("entryId")
+	"date" TEXT NOT NULL,
+	"createdAt" timestamptz NOT NULL default now(),
+	CONSTRAINT "entries_pk" PRIMARY KEY ("entryId")
 ) WITH (
   OIDS=FALSE
 );
@@ -23,7 +24,7 @@ CREATE TABLE "photos" (
 	"photoId" serial NOT NULL,
 	"entryId" int NOT NULL,
 	"photoUrl" TEXT NOT NULL,
-	"uploadedAt" timestamptz NOT NULL,
+	"uploadedAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "photos_pk" PRIMARY KEY ("photoId")
 ) WITH (
   OIDS=FALSE
@@ -35,7 +36,7 @@ CREATE TABLE "videos" (
 	"videoId" serial NOT NULL,
 	"entryId" int NOT NULL,
 	"videoUrl" TEXT NOT NULL,
-	"uploadedAt" timestamptz NOT NULL,
+	"uploadedAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "videos_pk" PRIMARY KEY ("videoId")
 ) WITH (
   OIDS=FALSE
@@ -49,16 +50,16 @@ CREATE TABLE "users" (
 	"username" TEXT NOT NULL UNIQUE,
 	"hashedPassword" TEXT NOT NULL,
 	"location" TEXT NOT NULL,
-	"joinedAt" timestamptz NOT NULL,
-	CONSTRAINT "Users_pk" PRIMARY KEY ("userId")
+	"joinedAt" timestamptz NOT NULL default now(),
+	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-ALTER TABLE "entires" ADD CONSTRAINT "entires_fk0" FOREIGN KEY ("userId") REFERENCES "Users"("userId");
+ALTER TABLE "entries" ADD CONSTRAINT "entries_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 
-ALTER TABLE "photos" ADD CONSTRAINT "photos_fk0" FOREIGN KEY ("entryId") REFERENCES "entires"("entryId");
+ALTER TABLE "photos" ADD CONSTRAINT "photos_fk0" FOREIGN KEY ("entryId") REFERENCES "entries"("entryId");
 
-ALTER TABLE "videos" ADD CONSTRAINT "videos_fk0" FOREIGN KEY ("entryId") REFERENCES "entires"("entryId");
+ALTER TABLE "videos" ADD CONSTRAINT "videos_fk0" FOREIGN KEY ("entryId") REFERENCES "entries"("entryId");

@@ -19,13 +19,30 @@
   text-align: end;
 }
 
+.modal-window-entries {
+  background-color: #fffbf0;
+  border: 0.2rem solid #658dc8;
+  font-family: Quicksand, sans-serif;
+  padding: 1.5rem;
+  width: 90%;
+  text-align: end;
+}
+
 .modal-button {
-  background-color: white;
+  background-color: inherit;
   border: none;
+}
+
+.modal-button:focus {
+  outline: 0;
 }
 
 .fa-xmark {
   font-size: 1.5rem;
+}
+
+.fa-xmark-blue {
+  color: #658dc8;
 }
 
 h4 {
@@ -46,6 +63,27 @@ p {
   margin: 0;
 }
 
+textarea {
+  border: 0.1rem solid #658dc8;
+  display: block;
+  margin: auto;
+  padding: 0.7rem;
+  width: 90%;
+}
+
+textarea:focus {
+  outline-color: #658dc8;
+}
+
+.btn-outline-primary {
+  color: #658dc8;
+  border-color: #658dc8;
+}
+
+.btn-outline-primary:hover {
+  background-color: #658dc8;
+}
+
 .row {
   justify-content: center;
 }
@@ -62,8 +100,37 @@ h2,
   font-weight: 600;
 }
 
+.card-header-blue {
+  background-color: #cfe2ff;
+}
+
 .card-body {
   background-color: #fffbf0;
+}
+
+.surf-question-div {
+  text-align: end;
+  margin-right: 0.7rem;
+}
+
+.surf-question-div > input:hover {
+  cursor: pointer;
+}
+
+.surf-question-label {
+  font-family: inter, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-right: 0.3rem;
+}
+
+.entry-content,
+.add-log-link {
+  font-family: Quicksand, sans-serif;
+  text-decoration: none;
+  color: black;
+  font-size: 0.9rem;
+  margin-left: 1rem;
 }
 
 .weather-link {
@@ -95,6 +162,14 @@ a:hover {
 
   .modal-window {
     width: 40%;
+  }
+
+  .modal-window-entries {
+    width: 40%;
+  }
+
+  textarea {
+    width: 85%;
   }
 }
 
