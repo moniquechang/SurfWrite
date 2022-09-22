@@ -7,10 +7,12 @@ export default class Home extends React.Component {
       locationLongitude: null,
       locationLatitude: null,
       isClickedWeather: false,
-      weatherData: null,
+      weatherData: [null, null, null, null, null, null, null],
       isClickedSurfbox: [false, false, false, false, false, false, false],
       isClickedAddEntry: false,
-      entryValue: ''
+      entryValueContent: '',
+      entryValueDate: '',
+      entryValueWeather: ''
     };
     this.handleClickOpenWeatherModal = this.handleClickOpenWeatherModal.bind(this);
     this.handleClickCloseWeatherModal = this.handleClickCloseWeatherModal.bind(this);
@@ -20,6 +22,7 @@ export default class Home extends React.Component {
     this.handleChangeSurfBox = this.handleChangeSurfBox.bind(this);
     this.handleClickEntriesModal = this.handleClickEntriesModal.bind(this);
     this.handleChangeEntriesTextbox = this.handleChangeEntriesTextbox.bind(this);
+    this.handleSubmitEntryForm = this.handleSubmitEntryForm.bind(this);
   }
 
   componentDidMount() {
@@ -87,7 +90,7 @@ export default class Home extends React.Component {
                 <input type='checkbox' name='surf?' value='yes' id='surf' onChange={handleCheckChange}></input>
               </div>
               <div className={addLogDivClass}>
-                <a className='add-log-link' onClick={this.handleClickEntriesModal}>Add a log...</a>
+                <a className='add-log-link' onClick={this.handleClickEntriesModal} id={index}>Add a log...</a>
               </div>
               <a className='weather-link mt-5' onClick={this.handleClickOpenWeatherModal} id={index}>
                 <i className="fa-solid fa-cloud mt-5"></i>
@@ -103,12 +106,15 @@ export default class Home extends React.Component {
 
   handleClickOpenWeatherModal(event) {
     const startDate = this.getIsoDates(event.target.id);
+    const copyArr = this.state.weatherData.map(day => day);
     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${this.state.locationLatitude}&longitude=${this.state.locationLongitude}&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=auto&start_date=${startDate}&end_date=${startDate}`)
       .then(response => response.json())
       .then(result => {
+        copyArr.splice(event.target.id, 1, result);
         this.setState({
           isClickedWeather: true,
-          weatherData: result
+          weatherData: copyArr,
+          entryValueWeather: copyArr[event.target.id]
         });
       });
   }
@@ -116,15 +122,38 @@ export default class Home extends React.Component {
   handleClickCloseWeatherModal() {
     this.setState({
       isClickedWeather: false,
-      weatherData: null
+      entryValueWeather: ''
     });
   }
 
-  handleClickEntriesModal() {
-    if (this.state.isClickedAddEntry) {
-      this.setState({ isClickedAddEntry: false });
-    } else {
-      this.setState({ isClickedAddEntry: true });
+  handleClickEntriesModal(event) {
+    if (!this.state.isClickedAddEntry && !this.state.weatherData[event.target.id]) {
+      const startDate = this.getIsoDates(event.target.id);
+      const copyArr = this.state.weatherData.map(day => day);
+      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${this.state.locationLatitude}&longitude=${this.state.locationLongitude}&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,windspeed_10m_max,windgusts_10m_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=auto&start_date=${startDate}&end_date=${startDate}`)
+        .then(response => response.json())
+        .then(result => {
+          copyArr.splice(event.target.id, 1, result);
+          this.setState({
+            weatherData: copyArr,
+            isClickedAddEntry: true,
+            entryValueDate: this.getLocalDateString(event.target.id),
+            entryValueWeather: copyArr[event.target.id]
+          });
+        });
+    } else if (!this.state.isClickedAddEntry && this.state.weatherData[event.target.id]) {
+      this.setState({
+        isClickedAddEntry: true,
+        entryValueDate: this.getLocalDateString(event.target.id),
+        entryValueWeather: this.state.weatherData[event.target.id]
+      });
+    } else if (this.state.isClickedAddEntry) {
+      this.setState({
+        isClickedAddEntry: false,
+        entryValueDate: '',
+        entryValueContent: '',
+        entryValueWeather: ''
+      });
     }
   }
 
@@ -185,7 +214,33 @@ export default class Home extends React.Component {
   }
 
   handleChangeEntriesTextbox(event) {
-    this.setState({ entryValue: event.target.value });
+    this.setState({ entryValueContent: event.target.value });
+  }
+
+  handleSubmitEntryForm(event) {
+    event.preventDefault();
+    fetch('/api/entries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        content: this.state.entryValueContent,
+        date: this.state.entryValueDate,
+        weather: this.state.entryValueWeather,
+        userId: 1
+      })
+    })
+      .then(res => res.json())
+      // .then(result => console.log(result))
+      .catch(err => console.error(err));
+
+    this.setState({
+      isClickedAddEntry: false,
+      entryValueContent: '',
+      entryValueDate: '',
+      entryValueWeather: ''
+    });
   }
 
   render() {
@@ -214,14 +269,14 @@ export default class Home extends React.Component {
           <div className='modal-window'>
             <button className='modal-button' onClick={this.handleClickCloseWeatherModal}><i className="fa-solid fa-xmark"></i></button>
             <h4 className='mt-2 mb-4'>Weather Forecast</h4>
-            {this.modalInfo(this.state.weatherData)}
+            {this.modalInfo(this.state.entryValueWeather)}
           </div>
         </div>
         <div className={entriesModalClass}>
           <div className='modal-window-entries'>
             <button className='modal-button' onClick={this.handleClickEntriesModal}><i className="fa-solid fa-xmark fa-xmark-blue"></i></button>
-            <form className='text-center'>
-              <textarea rows='7' placeholder='Start writing here...' value={this.state.entryValue} onChange={this.handleChangeEntriesTextbox}></textarea>
+            <form className='text-center' onSubmit={this.handleSubmitEntryForm}>
+              <textarea rows='7' placeholder='Start writing here...' value={this.state.entryValue} onChange={this.handleChangeEntriesTextbox} required='required'></textarea>
               <button type="submit" className="btn btn-outline-primary mt-4">SAVE</button>
             </form>
           </div>
