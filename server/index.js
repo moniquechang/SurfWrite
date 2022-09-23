@@ -40,7 +40,7 @@ app.get('/api/entries', (req, res, next) => {
            "weather"
       from "entries"
      where "userId" = $1
-     order by "entryId" desc
+     order by "date" desc
   `;
   const params = [1];
   db.query(sql, params)
