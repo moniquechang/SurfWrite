@@ -42,7 +42,7 @@ app.get('/api/entries', (req, res, next) => {
      where "userId" = $1
      order by "entryId" desc
   `;
-  const params = [req.body.userId];
+  const params = [1];
   db.query(sql, params)
     .then(result => {
       res.status(200).json(result.rows);
