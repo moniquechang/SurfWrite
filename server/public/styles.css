@@ -92,9 +92,18 @@ textarea:focus {
   font-size: 1.4rem;
 }
 
-.app-name {
+.app-name,
+.logs-link-navbar {
   text-decoration: none;
   color: white;
+}
+
+.app-name:hover {
+  text-decoration: none;
+}
+
+.logs-link-navbar {
+  display: none;
 }
 
 .modal-background-menu {
@@ -214,6 +223,15 @@ a:hover {
 
   textarea {
     width: 85%;
+  }
+
+  .logs-link-navbar {
+    display: contents;
+    font-size: 1rem;
+  }
+
+  .logs-link-navbar:hover {
+    cursor: pointer;
   }
 
   .menu-anchor-div {

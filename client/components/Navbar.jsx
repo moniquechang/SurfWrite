@@ -29,10 +29,14 @@ export default class Navbar extends React.Component {
       <>
         <nav className='navbar'>
           <div className='container'>
-            <a className='app-name'>SurfWrite</a>
+            <div>
+              <a className='navbar-brand app-name'>SurfWrite</a>
+              <a className='logs-link-navbar'>Logs</a>
+            </div>
             <a><i className="fa-solid fa-bars" onClick={this.handleClickMenu}></i></a>
           </div>
         </nav>
+
         <div className={menuModalBackground}>
           <div className='menu-window'>
             <div className='menu-anchor-div'>
