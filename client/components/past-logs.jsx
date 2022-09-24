@@ -84,7 +84,7 @@ export default class PastLogs extends React.Component {
           <div className='modal-window'>
             <button className='modal-button' onClick={this.handleClickWeatherModal}><i className="fa-solid fa-xmark"></i></button>
             <h4 className='mt-2 mb-4'>Weather Forecast</h4>
-            {CreateWeatherModal(this.state.currentDayWeather)}
+            {CreateWeatherModal(this.state.targetDayWeather)}
           </div>
         </div>
       </>
