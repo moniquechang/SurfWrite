@@ -10,7 +10,7 @@ CREATE TABLE "entries" (
 	"entryId" serial NOT NULL,
 	"userId" int NOT NULL,
 	"content" TEXT NOT NULL,
-	"weather" TEXT NOT NULL,
+	"weather" json NOT NULL,
 	"date" TEXT NOT NULL,
 	"createdAt" timestamptz NOT NULL default now(),
 	CONSTRAINT "entries_pk" PRIMARY KEY ("entryId")
@@ -62,4 +62,4 @@ ALTER TABLE "entries" ADD CONSTRAINT "entries_fk0" FOREIGN KEY ("userId") REFERE
 
 ALTER TABLE "photos" ADD CONSTRAINT "photos_fk0" FOREIGN KEY ("entryId") REFERENCES "entries"("entryId");
 
-ALTER TABLE "videos" ADD CONSTRAINT "videos_fk0" FOREIGN KEY ("entryId") REFERENCES "entries"("entryId");
+ALTER TABLE "videos" ADD CONSTRAINT "videos_fk0" FOREIGN KEY
