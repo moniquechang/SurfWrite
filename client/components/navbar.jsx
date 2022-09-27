@@ -30,8 +30,8 @@ export default class Navbar extends React.Component {
         <nav className='navbar'>
           <div className='container'>
             <div>
-              <a className='navbar-brand app-name'>SurfWrite</a>
-              <a className='logs-link-navbar'>Logs</a>
+              <a href='#' className='navbar-brand app-name'>SurfingFuze</a>
+              <a href='#pastLogs' className='logs-link-navbar'>Logs</a>
             </div>
             <a><i className="fa-solid fa-bars" onClick={this.handleClickMenu}></i></a>
           </div>
@@ -39,11 +39,19 @@ export default class Navbar extends React.Component {
 
         <div className={menuModalBackground}>
           <div className='menu-window'>
-            <div className='menu-anchor-div'>
-              <a className='menu-anchor'>Home</a>
+            <div>
+              <div className='menu-anchor-div'>
+                <a href='#' className='menu-anchor'>Home</a>
+              </div>
+              <div className='menu-anchor-div'>
+                <a href='#pastLogs' className='menu-anchor'>Past Logs</a>
+              </div>
+              <div className='menu-anchor-div'>
+                <a href='#pastLogs' className='menu-anchor'>Sign Out</a>
+              </div>
             </div>
-            <div className='menu-anchor-div'>
-              <a className='menu-anchor'>Past Logs</a>
+            <div>
+            <img src='/images/app-drawer-pic.png'></img>
             </div>
           </div>
         </div>
