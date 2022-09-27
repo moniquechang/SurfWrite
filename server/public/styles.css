@@ -124,6 +124,7 @@ textarea:focus {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .menu-anchor-div {
@@ -136,12 +137,12 @@ textarea:focus {
   display: block;
   text-decoration: none;
   color: black;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
-img {
-  width: 500px;
-  margin-bottom: 1rem;
+.menu-image {
+  width: 240px;
+  margin-bottom: 6rem;
 }
 
 .row {
@@ -250,10 +251,19 @@ a:hover {
   .menu-anchor {
     font-size: 1rem;
   }
+
+  .menu-image {
+    width: 380px;
+    margin-bottom: 5rem;
+  }
 }
 
 @media screen and (min-width: 1280px) {
   .card-header {
     font-size: 0.9rem;
+  }
+
+  .menu-image {
+    width: 500px;
   }
 }

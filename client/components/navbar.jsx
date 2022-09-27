@@ -20,39 +20,41 @@ export default class Navbar extends React.Component {
 
   render() {
     let menuModalBackground;
+    let menuModalWindow;
     if (this.state.isClicked) {
       menuModalBackground = 'modal-background-menu';
+      menuModalWindow = 'menu-window';
     } else {
       menuModalBackground = 'modal-background-menu hidden';
+      menuModalWindow = 'menu-window hidden';
     }
     return (
       <>
         <nav className='navbar'>
           <div className='container'>
             <div>
-              <a href='#' className='navbar-brand app-name'>SurfingFuze</a>
+              <a href='#' className='navbar-brand app-name'>SurfWrite</a>
               <a href='#pastLogs' className='logs-link-navbar'>Logs</a>
             </div>
             <a><i className="fa-solid fa-bars" onClick={this.handleClickMenu}></i></a>
           </div>
         </nav>
 
-        <div className={menuModalBackground}>
-          <div className='menu-window'>
-            <div>
-              <div className='menu-anchor-div'>
-                <a href='#' className='menu-anchor'>Home</a>
-              </div>
-              <div className='menu-anchor-div'>
-                <a href='#pastLogs' className='menu-anchor'>Past Logs</a>
-              </div>
-              <div className='menu-anchor-div'>
-                <a href='#pastLogs' className='menu-anchor'>Sign Out</a>
-              </div>
+        <div className={menuModalBackground} onClick={this.handleClickMenu}></div>
+        <div className={menuModalWindow}>
+          <div>
+            <div className='menu-anchor-div'>
+              <a href='#' className='menu-anchor' onClick={this.handleClickMenu}>Home</a>
             </div>
-            <div>
-            <img src='/images/app-drawer-pic.png'></img>
+            <div className='menu-anchor-div'>
+              <a href='#pastLogs' className='menu-anchor' onClick={this.handleClickMenu}>Past Logs</a>
             </div>
+            <div className='menu-anchor-div'>
+              <a className='menu-anchor' onClick={this.handleClickMenu}></a>
+            </div>
+          </div>
+          <div>
+          <img className='menu-image' src='/images/app-drawer-pic.png'></img>
           </div>
         </div>
       </>
