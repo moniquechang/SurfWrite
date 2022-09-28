@@ -84,6 +84,79 @@ textarea:focus {
   background-color: #658dc8;
 }
 
+.navbar {
+  background-color: #658dc8;
+  color: white;
+  font-family: inter, sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.app-name,
+.logs-link-navbar {
+  text-decoration: none;
+  color: white;
+}
+
+.app-name:hover {
+  text-decoration: none;
+}
+
+.logs-link-navbar {
+  display: none;
+}
+
+.modal-background-menu {
+  position: fixed;
+  top: 3rem;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.menu-window {
+  background-color: white;
+  position: fixed;
+  top: 3rem;
+  right: 0;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 2;
+  animation-duration: 0.5s;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    right: -15rem;
+  }
+
+  to {
+    right: 0;
+  }
+}
+
+.menu-anchor-div {
+  text-align: center;
+  border-bottom: 0.1rem solid #dedddd;
+  padding: 0.8rem 1.6rem;
+}
+
+.menu-anchor {
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-size: 0.9rem;
+}
+
+.menu-image {
+  width: 240px;
+  margin-bottom: 6rem;
+}
+
 .row {
   justify-content: center;
 }
@@ -92,10 +165,12 @@ textarea:focus {
   padding: 0;
   background-color: #f1f1f1;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+  width: 100%;
 }
 
 h2,
-.card-header {
+.card-header,
+.menu-anchor {
   font-family: Quicksand, sans-serif;
   font-weight: 600;
 }
@@ -171,10 +246,46 @@ a:hover {
   textarea {
     width: 85%;
   }
+
+  .logs-link-navbar {
+    display: contents;
+    font-size: 1rem;
+  }
+
+  .logs-link-navbar:hover {
+    cursor: pointer;
+  }
+
+  .menu-anchor-div {
+    padding: 0.8rem 3.5rem;
+  }
+
+  .menu-anchor {
+    font-size: 1rem;
+  }
+
+  .menu-image {
+    width: 380px;
+    margin-bottom: 5rem;
+  }
+
+  @keyframes slidein {
+    from {
+      right: -25rem;
+    }
+
+    to {
+      right: 0;
+    }
+  }
 }
 
 @media screen and (min-width: 1280px) {
   .card-header {
     font-size: 0.9rem;
+  }
+
+  .menu-image {
+    width: 500px;
   }
 }

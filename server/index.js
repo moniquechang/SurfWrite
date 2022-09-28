@@ -33,6 +33,23 @@ app.post('/api/entries', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/entries', (req, res, next) => {
+  const sql = `
+    select "content",
+           "date",
+           "weather"
+      from "entries"
+     where "userId" = $1
+     order by "date" desc
+  `;
+  const params = [1];
+  db.query(sql, params)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
