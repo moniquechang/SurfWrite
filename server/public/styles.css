@@ -125,6 +125,18 @@ textarea:focus {
   flex-direction: column;
   justify-content: space-between;
   z-index: 2;
+  animation-duration: 0.5s;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    right: -15rem;
+  }
+
+  to {
+    right: 0;
+  }
 }
 
 .menu-anchor-div {
@@ -255,6 +267,16 @@ a:hover {
   .menu-image {
     width: 380px;
     margin-bottom: 5rem;
+  }
+
+  @keyframes slidein {
+    from {
+      right: -25rem;
+    }
+
+    to {
+      right: 0;
+    }
   }
 }
 
