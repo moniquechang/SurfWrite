@@ -15,7 +15,6 @@
   font-weight: 600;
   border-radius: 1rem;
   padding: 2rem;
-  width: 90%;
   text-align: end;
 }
 
@@ -24,7 +23,6 @@
   border: 0.2rem solid #658dc8;
   font-family: Quicksand, sans-serif;
   padding: 1.5rem;
-  width: 90%;
   text-align: end;
 }
 
@@ -51,12 +49,9 @@ h4 {
   text-align: center;
 }
 
-.left-col {
-  text-align: left;
-}
-
-.right-col {
-  text-align: right;
+.weather-info-row {
+  display: inline-flex;
+  justify-content: space-between;
 }
 
 p {
@@ -68,7 +63,6 @@ textarea {
   display: block;
   margin: auto;
   padding: 0.7rem;
-  width: 90%;
 }
 
 textarea:focus {
@@ -153,7 +147,6 @@ textarea:focus {
 }
 
 .menu-image {
-  width: 240px;
   margin-bottom: 6rem;
 }
 
@@ -235,18 +228,6 @@ a:hover {
     font-size: 0.8rem;
   }
 
-  .modal-window {
-    width: 40%;
-  }
-
-  .modal-window-entries {
-    width: 40%;
-  }
-
-  textarea {
-    width: 85%;
-  }
-
   .logs-link-navbar {
     display: contents;
     font-size: 1rem;
@@ -265,7 +246,6 @@ a:hover {
   }
 
   .menu-image {
-    width: 380px;
     margin-bottom: 5rem;
   }
 
@@ -283,9 +263,5 @@ a:hover {
 @media screen and (min-width: 1280px) {
   .card-header {
     font-size: 0.9rem;
-  }
-
-  .menu-image {
-    width: 500px;
   }
 }

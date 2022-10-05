@@ -1,6 +1,39 @@
-/* @media screen and (min-width: 768px) {
+.modal-window {
+  width: 90%;
+}
+
+.modal-window-entries {
+  width: 90%;
+}
+
+textarea {
+  width: 90%;
+}
+
+.menu-image {
+  width: 240px;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-window {
+    width: 40%;
+  }
+
+  .modal-window-entries {
+    width: 40%;
+  }
+
+  textarea {
+    width: 85%;
+  }
+
+  .menu-image {
+    width: 380px;
+  }
 }
 
 @media screen and (min-width: 1280px) {
+  .menu-image {
+    width: 500px;
+  }
 }
-*/
