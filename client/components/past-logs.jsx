@@ -13,7 +13,8 @@ export default class PastLogs extends React.Component {
     this.state = {
       entries: null,
       isClickedWeather: false,
-      targetDayWeather: null
+      targetDayWeather: null,
+      isLoading: false
     };
 
     this.handleClickWeatherModal = this.handleClickWeatherModal.bind(this);
@@ -24,7 +25,10 @@ export default class PastLogs extends React.Component {
       method: 'GET'
     })
       .then(res => res.json())
-      .then(result => this.setState({ entries: result }));
+      .then(result => this.setState({
+        entries: result,
+        isLoading: true
+      }));
   }
 
   createPastLogCards() {
@@ -65,9 +69,25 @@ export default class PastLogs extends React.Component {
   }
 
   render() {
-    if (this.state.entries === null) {
-      return null;
+    if (!this.state.isLoading) {
+      return (
+        <>
+          <div className='loading-div'>
+            <h2 className='loading-text'>Your logs are loading...</h2>
+            <i className="fa-solid fa-person-swimming"></i>
+          </div>
+        </>
+      );
     }
+
+    if (!this.state.entries[0]) {
+      return (
+      <div className='no-logs-div'>
+        <h2>No Past Logs Yet!</h2>
+      </div>
+      );
+    }
+
     let modalBackgroundClass;
     if (this.state.isClickedWeather) {
       modalBackgroundClass = 'modal-background';
