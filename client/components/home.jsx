@@ -5,6 +5,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       locationLongitude: null,
       locationLatitude: null,
       isClickedWeather: false,
@@ -58,7 +59,8 @@ export default class Home extends React.Component {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         locationLongitude: position.coords.longitude,
-        locationLatitude: position.coords.latitude
+        locationLatitude: position.coords.latitude,
+        isLoading: true
       });
     });
   }
@@ -240,6 +242,17 @@ export default class Home extends React.Component {
   }
 
   render() {
+    if (!this.state.isLoading) {
+      return (
+          <>
+            <div className='loading-div'>
+              <h2 className='loading-text'>Your week is loading...</h2>
+              <i className="fa-solid fa-person-swimming"></i>
+            </div>
+         </>
+      );
+    }
+
     let modalBackgroundClass;
     let entriesModalClass;
 
