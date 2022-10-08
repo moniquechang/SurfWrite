@@ -238,7 +238,10 @@ export default class Home extends React.Component {
           selectedDay: null
         });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        window.alert('A network error occured. Please try again.');
+      });
   }
 
   render() {

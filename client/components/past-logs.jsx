@@ -28,7 +28,11 @@ export default class PastLogs extends React.Component {
       .then(result => this.setState({
         entries: result,
         isLoading: true
-      }));
+      }))
+      .catch(err => {
+        console.error(err);
+        window.alert('A network error occured. Please try again.');
+      });
   }
 
   createPastLogCards() {

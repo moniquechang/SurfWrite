@@ -60,4 +60,9 @@ export function CreateWeatherModal(data) {
     );
     return modalWindowInfo;
   }
+  return (
+      <div className='row text-center'>
+        <p>An error occured... Please try again!</p>
+      </div>
+  );
 }
