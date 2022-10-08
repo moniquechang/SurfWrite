@@ -54,7 +54,7 @@ export default class Navbar extends React.Component {
             </div>
           </div>
           <div>
-          <img className='menu-image' src='/images/app-drawer-pic.png'></img>
+          <img className='menu-image' src='/images/app-drawer-pic.webp'></img>
           </div>
         </div>
       </>
