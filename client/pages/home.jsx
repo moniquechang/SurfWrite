@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreateWeatherModal } from './components/create-weather-modal';
+import { CreateWeatherModal } from '../components/create-weather-modal';
 
 export default class Home extends React.Component {
   constructor(props) {
