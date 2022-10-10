@@ -15,10 +15,6 @@ const app = express();
 app.use(express.json());
 app.use(staticMiddleware);
 
-app.get('/api/hello', (req, res) => {
-  res.json({ hello: 'world' });
-});
-
 app.post('/api/entries', (req, res, next) => {
   const sql = `
       insert into "entries" ("content", "weather", "date", "userId")
