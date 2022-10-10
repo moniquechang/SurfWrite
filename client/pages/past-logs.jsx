@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreateWeatherModal } from './create-weather-modal';
+import { CreateWeatherModal } from '../components/create-weather-modal';
 
 const styles = {
   row: {
