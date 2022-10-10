@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './components/navbar';
-import Home from './components/home';
-import PastLogs from './components/past-logs';
+import Home from './pages/home';
+import PastLogs from './pages/past-logs';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
