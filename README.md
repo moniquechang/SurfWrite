@@ -60,8 +60,8 @@ Try the application live at [SurfWrite](https://surfwrite.moniquechang.com)
 1. Clone the repository.
 
     ```shell
-    git clone git@github.com:moniquechang/surfwrite.git
-    cd surfwrite
+    git clone git@github.com:moniquechang/SurfWrite.git
+    cd SurfWrite
     ```
 
 1. Create a `.env` file from the example template.
