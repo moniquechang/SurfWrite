@@ -55,29 +55,28 @@ export default class Home extends React.Component {
     this.handleSubmitEntryForm = this.handleSubmitEntryForm.bind(this);
   }
 
-  /* componentDidMount() {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.setState({
-        locationLongitude: position.coords.longitude,
-        locationLatitude: position.coords.latitude,
-        isLoading: true
-      });
-      if (this.state.locationLongitude === null || this.state.locationLatitude === null) {
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.setState({
+          locationLongitude: position.coords.longitude,
+          locationLatitude: position.coords.latitude,
+          isLoading: true
+        });
+      }, () => {
         this.setState({
           locationLongitude: -118.24,
           locationLatitude: 34.05,
           isLoading: true
         });
-      }
-    });
-  } */
-
-  componentDidMount() {
-    this.setState({
-      locationLongitude: -118.24,
-      locationLatitude: 34.05,
-      isLoading: true
-    });
+      });
+    } else {
+      this.setState({
+        locationLongitude: -118.24,
+        locationLatitude: 34.05,
+        isLoading: true
+      });
+    }
   }
 
   getWeeklyDates() {
