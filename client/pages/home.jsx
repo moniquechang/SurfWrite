@@ -56,13 +56,27 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(position => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.setState({
+          locationLongitude: position.coords.longitude,
+          locationLatitude: position.coords.latitude,
+          isLoading: true
+        });
+      }, () => {
+        this.setState({
+          locationLongitude: -118.24,
+          locationLatitude: 34.05,
+          isLoading: true
+        });
+      });
+    } else {
       this.setState({
-        locationLongitude: position.coords.longitude,
-        locationLatitude: position.coords.latitude,
+        locationLongitude: -118.24,
+        locationLatitude: 34.05,
         isLoading: true
       });
-    });
+    }
   }
 
   getWeeklyDates() {
